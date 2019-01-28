@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+    node-1:
+        build:
+          context: ./dockerfiles
+          dockerfile: cluster
+        command: sudo -u mysql mysqld --wsrep-new-cluster
+    node-2:
+        build:
+          context: ./dockerfiles
+          dockerfile: cluster
+        links:
+          - node-1
+        command: sudo -u mysql mysqld
+    node-3:
+        build:
+          context: ./dockerfiles
+          dockerfile: cluster
+        links:
+          - node-1
+        command: sudo -u mysql mysqld
+    standalone:
+        build:
+          context: ./dockerfiles
+          dockerfile: standalone
+        command: sudo -u mysql mysqld

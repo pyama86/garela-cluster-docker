@@ -1,0 +1,8 @@
+FROM centos:7
+ADD mariadb.repo /etc/yum.repos.d/mariadb.repo
+ADD bench.sh /usr/bin/bench
+RUN chmod +x /usr/bin/bench
+RUN curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | bash
+RUN yum install -y -q MariaDB-server MariaDB-client galera sudo sysbench
+
+ADD cluster.cnf /etc/my.cnf.d/my.cnf
